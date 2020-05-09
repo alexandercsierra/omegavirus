@@ -6,7 +6,7 @@ class Player:
         self.code = code
 
     def __str__(self):
-        return f"{self.color}, has {self.inventory}. Droid? {self.droid} Secret code: {self.code}"
+        return f'{self.color}, has {self.inventory}. Droid? {self.droid} Secret code: {self.code}'
 
 
 #player
