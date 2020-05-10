@@ -6,6 +6,18 @@ from room import Room
 
 
 
+# Room(name, code, player_codes, is_trapped, items, color)
+
+entry = Room('entry', 123, 321, False, [], 'green')
+hall = Room('hall', 213, 321, False, [], 'green')
+win_room = Room('win_room', 000, 321, False, [], 'green')
+entry.n = hall
+hall.s=entry
+entry.e = win_room
+win_room.w = entry
+
+
+
 
 def game():
     quit = False
@@ -34,12 +46,29 @@ def game():
             break
         else: 
             print('please enter a number')
-    player = Player(player_color, player_code)
+    player = Player(player_color, player_code, entry)
     print(player)
+
+
+
     while quit != True:
-        action = input('What do you want to do?')
+        if player.loc == win_room:
+            win_room.code = player.code
+        print(player.loc)
+        action = input('What do you want to do?\n')
+        split = action.split()
         if action == 'q':
             quit = True
+        elif split[0] == 'go' or split[0] == 'move':
+            if len(split) == 1: 
+                print(f'Sorry, {split[0]} where?')
+            elif split[1].lower() in ['n', 'north', 'w', 'west', 's', 'south', 'e', 'east']:
+                player.move(split[1][0])
+        elif action in ['i', 'inventory', 'check inventory', 'open inventory']:
+            print(player.print_inv())
+        else:
+            print("sorry don't recognize that")
+        
     print('Thanks for playing')
 
 game()
